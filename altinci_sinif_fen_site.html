@@ -1,0 +1,145 @@
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="index, follow">
+  <meta name="description" content="Altıncı sınıf fen konuları eğlenceli anlatım, cam tasarım, test ve karakterli öğrenim.">
+  <title>Altıncı Sınıf Fen Konuları – Eğlenceli Anlatım</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Comic Sans MS', cursive;
+      background-image: url('https://i.imgur.com/fOyRMsm.jpg');
+      background-size: cover;
+      background-attachment: fixed;
+      color: #fff;
+    }
+    .glass {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      padding: 20px;
+      margin: 20px;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .dialog {
+      background-color: rgba(0,0,0,0.6);
+      border-left: 5px solid #00ccff;
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 5px;
+    }
+    .dialog span {
+      font-weight: bold;
+      color: #00ffff;
+    }
+    h1, h2 {
+      text-align: center;
+      text-shadow: 2px 2px 5px black;
+    }
+    button {
+      display: block;
+      margin: 10px auto;
+      padding: 10px 15px;
+      font-weight: bold;
+      background-color: #00ccff;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0099cc;
+    }
+    .result {
+      text-align: center;
+      font-size: 1.2em;
+      font-weight: bold;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🌟 Altıncı Sınıf Fen Konuları 🌟</h1>
+  <h2>Eğlenceli ve Etkileşimli Anlatım</h2>
+
+  <div class="glass">
+    <div class="dialog"><span>Mert:</span> Bu hafta “Sesin Özellikleri” konusunu gördük mü Zeynep?</div>
+    <div class="dialog"><span>Zeynep:</span> Evet, hocamız titreşimin nasıl ses oluşturduğunu anlattı!</div>
+    <div class="dialog"><span>Mert:</span> Hadi şimdi birlikte tekrar edelim!</div>
+    <p>🔊 Ses, titreşimle oluşur. Katı maddelerde daha hızlı yayılır. Titreşim kaynağı durursa ses de durur.</p>
+  </div>
+
+  <div class="glass">
+    <h2>🧠 Mini Test (20 Soru)</h2>
+    <div id="quiz-area"></div>
+    <div class="result" id="result"></div>
+    <button onclick="calculateScore()">Testi Bitir ve Puanımı Göster</button>
+  </div>
+
+  <script>
+    const questions = [
+      ["Ses nasıl oluşur?", "Titreşimle", "Işıkla", 0],
+      ["Güneş'e en yakın gezegen hangisidir?", "Merkür", "Venüs", 0],
+      ["Fotosentez yapan canlılar kimlerdir?", "Bitkiler", "Hayvanlar", 0],
+      ["Elektrik devresi ne zaman çalışır?", "Devre tamamlanınca", "Pil çıkarılınca", 0],
+      ["Gölge nasıl oluşur?", "Işık engelle karşılaşınca", "Ses duyulunca", 0],
+      ["Sürtünme kuvveti ne yapar?", "Hareketi yavaşlatır", "Hızı artırır", 0],
+      ["Ampul ışık yayar mı?", "Evet", "Hayır", 0],
+      ["Isı alan madde ne yapar?", "Genleşir", "Büzülür", 0],
+      ["Dünya'nın dönüşü neyi oluşturur?", "Gece ve gündüzü", "Ay'ı", 0],
+      ["Vücudumuzda oksijen taşıyan sistem nedir?", "Dolaşım", "Sindirim", 0],
+      ["Işık hangi yolla yayılır?", "Doğrusal", "Zikzak", 0],
+      ["Besin zincirinin ilk halkası nedir?", "Üretici", "Tüketici", 0],
+      ["Mikroskop ne işe yarar?", "Küçük şeyleri büyütmek", "Ses üretmek", 0],
+      ["Elektrik kaynağı nedir?", "Pil", "Ampul", 0],
+      ["Katılar sesi nasıl iletir?", "Hızlı", "Yavaş", 0],
+      ["Isının ölçü birimi nedir?", "Santigrat", "Kilogram", 0],
+      ["Uzay boşluğunda ses yayılır mı?", "Hayır", "Evet", 0],
+      ["Bir cismin yer değiştirmesi neyle ilgilidir?", "Hareket", "Ses", 0],
+      ["Ay kendi ışığını yayar mı?", "Hayır", "Evet", 0],
+      ["Güneş sistemi kaç gezegenden oluşur?", "8", "10", 0]
+    ];
+
+    function generateQuiz() {
+      const quizArea = document.getElementById("quiz-area");
+      questions.forEach((q, index) => {
+        quizArea.innerHTML += `
+          <div class="glass">
+            <p><strong>${index + 1}. ${q[0]}</strong></p>
+            <label><input type="radio" name="q${index}" value="0"> ${q[1]}</label><br>
+            <label><input type="radio" name="q${index}" value="1"> ${q[2]}</label>
+          </div>
+        `;
+      });
+    }
+
+    function calculateScore() {
+      let score = 0;
+      questions.forEach((q, index) => {
+        const selected = document.querySelector(`input[name="q${index}"]:checked`);
+        if (selected && parseInt(selected.value) === q[3]) {
+          score++;
+        }
+      });
+      let resultText = `Toplam Doğru: ${score} / 20<br>Puan: ${score * 5}`;
+      if (score === 20) {
+        resultText += "<br>🎉 MÜKEMMEL! 100 PUAN!<br>🛸 Özel bilgi: Uzayda hava olmadığı için ses yayılmaz!";
+      } else if (score >= 15) {
+        resultText += "<br>⭐ Harika gidiyorsun!";
+      } else {
+        resultText += "<br>📚 Birkaç konuyu tekrar etmeni öneririm.";
+      }
+      document.getElementById("result").innerHTML = resultText;
+    }
+
+    generateQuiz();
+  </script>
+</body>
+</html>
